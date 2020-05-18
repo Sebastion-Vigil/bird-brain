@@ -8,9 +8,44 @@
 }
 
 .food-quizz {
-  height: 200px;
-  width: 125px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center; 
+  height: 280px;
+  width: 175px;
   border: 1px solid blue;
+}
+
+.text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 170px;
+  height: 25px;
+  border: 1px solid gray;
+}
+
+.ingredient-landing {
+  width: 100px;
+  height: 32px;
+  background-color: lightslategrey;
+}
+
+.hint {
+  width: 125px;
+  height: 30px;
+  border: 1px solid darkgrey;
+}
+
+.top {
+  background-image: url('../images/CroissantTop.png');
+  background-size: 100% 100%;
+}
+
+.bottom {
+  background-image: url('../images/CroissantBottom.png');
+  background-size: 100% 100%;
 }
 
 .ingredients {
@@ -26,5 +61,8 @@
 .ingredient {
   width: 95px;
   height: 30px;
-  background-color: darkgrey;
+}
+
+[draggable=true] {
+  cursor: move;
 }
