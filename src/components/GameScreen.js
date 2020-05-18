@@ -30,37 +30,53 @@ class GameScreen extends React.Component {
                   </div>
               </div>
               <div className='ingredients'>
-                  <div draggable='true' style={{
+                  <div style={{
                       backgroundImage: 'url(' + pickles + ')',
-                      backgroundSize: '100% 100%'
+                      backgroundSize: '100% 100%',
+                      top: '1px',
+                      left: '3px'
                   }} class='ingredient'></div>
-                  <div draggable='true' style={{
+                  <div style={{
                       backgroundImage: 'url(' + bacon + ')',
-                      backgroundSize: '100% 100%'
+                      backgroundSize: '100% 100%',
+                      top: '32px',
+                      left: '3px'
                   }} class='ingredient'></div>
-                  <div draggable='true' style={{
+                  <div style={{
                       backgroundImage: 'url(' + lettuce + ')',
-                      backgroundSize: '100% 100%'
+                      backgroundSize: '100% 100%',
+                      top: '64px',
+                      left: '3px'
                   }} class='ingredient'></div>
-                  <div draggable='true' style={{
+                  <div style={{
                       backgroundImage: 'url(' + egg + ')',
-                      backgroundSize: '100% 100%'
+                      backgroundSize: '100% 100%',
+                      top: '96px',
+                      left: '3px'
                   }} class='ingredient'></div>
-                  <div draggable='true' style={{
+                  <div style={{
                       backgroundImage: 'url(' + tomato + ')',
-                      backgroundSize: '100% 100%'
+                      backgroundSize: '100% 100%',
+                      top: '128px',
+                      left: '3px'
                   }} class='ingredient'></div>
-                  <div draggable='true' style={{
+                  <div style={{
                       backgroundImage: 'url(' + onions + ')',
-                      backgroundSize: '100% 100%'
+                      backgroundSize: '100% 100%',
+                      top: '160px',
+                      left: '3px'
                   }} class='ingredient'></div>
-                  <div draggable='true' style={{
+                  <div style={{
                       backgroundImage: 'url(' + cheese + ')',
-                      backgroundSize: '100% 100%'
+                      backgroundSize: '100% 100%',
+                      top: '192px',
+                      left: '3px'
                   }} class='ingredient'></div>
-                  <div draggable='true' style={{
+                  <div style={{
                       backgroundImage: 'url(' + avocado + ')',
-                      backgroundSize: '100% 100%'
+                      backgroundSize: '100% 100%',
+                      top: '224px',
+                      left: '3px'
                   }} class='ingredient'></div>
               </div>
             </div>
