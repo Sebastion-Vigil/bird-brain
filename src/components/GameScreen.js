@@ -50,6 +50,41 @@ class GameScreen extends React.Component {
         ]
     }
 
+    handleDragStart = posIndex => {
+      // onMouseDown -> switch to touch event later
+      this.setState({
+          dragTimer: setInterval(() => {
+              const newTileStyles = JSON.parse(JSON.stringify(this.state.tileStyles))
+              const Qx = this.props.position.x
+              const Qy = this.props.position.y
+              const Tx = parseInt(newTileStyles[posIndex].left)
+              const Ty = parseInt(newTileStyles[posIndex].top)
+              const xDiff = Qx - Tx
+              const yDiff = Qy - Ty
+              const Nx = Qx - xDiff
+              const Ny = Qy - yDiff
+              newTileStyles[posIndex] = {
+                  top: Ny + 'px',
+                  left: Nx + 'px'
+              }
+              console.log('after', newTileStyles)
+              this.setState({
+                  tileStyles: newTileStyles
+              })
+          }, 0)
+      })
+    }
+
+    handleDragEnd = () => {
+      // onMouseUp -> switch to touch event later
+      console.log('timer stopped')
+      clearInterval(this.state.dragTimer)
+    }
+
+    help = () => {
+        console.log(this.props.position)
+    }
+
     render() {
         return (
             <div className='game-screen'>
@@ -73,8 +108,12 @@ class GameScreen extends React.Component {
                       backgroundSize: '100% 100%',
                       top: this.state.tileStyles[0].top,
                       left: this.state.tileStyles[0].left
-
-                  }} class='ingredient'></div>
+                      }} 
+                      class='ingredient'
+                      onMouseDown={() => this.handleDragStart(0)}
+                      onMouseUp={this.handleDragEnd}
+                      >
+                  </div>
                   <div style={{
                       backgroundImage: 'url(' + bacon + ')',
                       backgroundSize: '100% 100%',
