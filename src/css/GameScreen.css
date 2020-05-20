@@ -1,6 +1,7 @@
 .game-screen {
+    position: relative;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
     width: 300px;
     height: 300px;
@@ -49,11 +50,6 @@
 }
 
 .ingredients {
-  /* position: relative; */
-  /* display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center; */
   width: 100px;
   height: 290px;
   border: 1px solid blue;
@@ -63,8 +59,4 @@
   position: absolute;
   width: 95px;
   height: 30px;
-}
-
-[draggable=true] {
-  cursor: move;
 }
