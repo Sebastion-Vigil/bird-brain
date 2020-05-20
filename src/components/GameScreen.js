@@ -47,38 +47,52 @@ class GameScreen extends React.Component {
                 top: '228px',
                 left: '200px'
             }
-        ]
+        ],
+        tileActive: false
     }
 
-    handleDragStart = posIndex => {
-      // onMouseDown -> switch to touch event later
+    handleDragStart = (posIndex) => {
+      const newTileStyles = JSON.parse(JSON.stringify(this.state.tileStyles))
+      const Tx = parseInt(newTileStyles[posIndex].left)
+      const Ty = parseInt(newTileStyles[posIndex].top)
+      const Qx = this.props.position.x
+      const Qy = this.props.position.y
+      const xDiff = Qx - Tx
+      const yDiff = Qy - Ty
+      const Nx = Qx - xDiff
+      const Ny = Qy - yDiff
+      newTileStyles[posIndex] = {
+          top: Ny + 'px',
+          left: Nx + 'px'
+      }
       this.setState({
-          dragTimer: setInterval(() => {
-              const newTileStyles = JSON.parse(JSON.stringify(this.state.tileStyles))
-              const Qx = this.props.position.x
-              const Qy = this.props.position.y
-              const Tx = parseInt(newTileStyles[posIndex].left)
-              const Ty = parseInt(newTileStyles[posIndex].top)
-              const xDiff = Qx - Tx
-              const yDiff = Qy - Ty
-              const Nx = Qx - xDiff
-              const Ny = Qy - yDiff
-              newTileStyles[posIndex] = {
-                  top: Ny + 'px',
-                  left: Nx + 'px'
-              }
-              console.log('after', newTileStyles)
-              this.setState({
-                  tileStyles: newTileStyles
-              })
-          }, 0)
+          tileStyles: newTileStyles,
+          tileActive: true
       })
+    }
+
+    handleDragMove = (posIndex) => {
+         if (!this.state.tileActive) return
+         this.setState({
+             dragTimer: setInterval(() => {
+                 const newTileStyles = JSON.parse(JSON.stringify(this.state.tileStyles))
+                 newTileStyles[posIndex] = {
+                     top: this.props.position.y + 'px',
+                     left: this.props.position.x + 'px'
+                 }
+                 this.setState({
+                     tileStyles: newTileStyles
+                 })
+             }, 0)
+         })
     }
 
     handleDragEnd = () => {
       // onMouseUp -> switch to touch event later
-      console.log('timer stopped')
       clearInterval(this.state.dragTimer)
+      this.setState({
+          tileActive: false
+      })
     }
 
     help = () => {
@@ -87,7 +101,7 @@ class GameScreen extends React.Component {
 
     render() {
         return (
-            <div className='game-screen'>
+            <div className='game-screen' onMouseUp={this.handleDragEnd}>
               <div className='food-quizz'>
                   <div className='text'>
                       What comes on a BLTA Croissant?
@@ -109,9 +123,9 @@ class GameScreen extends React.Component {
                       top: this.state.tileStyles[0].top,
                       left: this.state.tileStyles[0].left
                       }} 
-                      class='ingredient'
+                      className='ingredient'
                       onMouseDown={() => this.handleDragStart(0)}
-                      onMouseUp={this.handleDragEnd}
+                      onMouseMove={() => this.handleDragMove(0)}
                       >
                   </div>
                   <div style={{
