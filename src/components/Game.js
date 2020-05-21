@@ -1,7 +1,5 @@
 import React from 'react'
 
-import ReactCursorPosition from 'react-cursor-position'
-
 import Logo from './Logo.js'
 import GameScreen from './GameScreen.js'
 import AnswerScreen from './AnswerScreen.js'
@@ -13,9 +11,7 @@ class Game extends React.Component {
     return (
       <div className='game'>
         <Logo />
-        <ReactCursorPosition>
-          <GameScreen />
-        </ReactCursorPosition>
+        <GameScreen />
         <AnswerScreen />
       </div>
     )

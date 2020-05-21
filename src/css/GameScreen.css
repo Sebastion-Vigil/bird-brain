@@ -1,5 +1,4 @@
 .game-screen {
-    position: relative;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -32,7 +31,7 @@
   height: 32px;
   background-color: lightslategrey;
 }
-
+/* croissant top & bottom */
 .hint {
   width: 125px;
   height: 30px;
@@ -50,13 +49,16 @@
 }
 
 .ingredients {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
   width: 100px;
   height: 290px;
   border: 1px solid blue;
 }
 
 .ingredient {
-  position: absolute;
   width: 95px;
   height: 30px;
 }
