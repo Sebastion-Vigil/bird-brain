@@ -1,10 +1,11 @@
 .game-screen {
+    
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     width: 300px;
     height: 300px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .food-quizz {
@@ -14,7 +15,7 @@
   align-items: center; 
   height: 280px;
   width: 175px;
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
 }
 
 .text {
@@ -23,7 +24,7 @@
   align-items: center;
   width: 170px;
   height: 25px;
-  border: 1px solid gray;
+  /* border: 1px solid gray; */
 }
 
 .ingredient-landing {
@@ -34,7 +35,7 @@
 .hint {
   width: 125px;
   height: 30px;
-  border: 1px solid darkgrey;
+  /* border: 1px solid darkgrey; */
 }
 
 .top {
@@ -54,7 +55,7 @@
   align-items: center;
   width: 100px;
   height: 290px;
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
 }
 
 .ingredient {

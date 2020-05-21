@@ -1,5 +1,8 @@
 .answer-screen {
     width: 300px; 
     height: 200px;
+    background-image: url('../images/Test.jpg');
+    background-size: 100% 100%;
     border: 1px solid red;
+    border-radius: 50%;
 }

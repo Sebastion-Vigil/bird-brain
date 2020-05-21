@@ -23,12 +23,23 @@ class GameScreen extends React.Component {
         'silver',
         'silver',
         'silver'
+    ],
+    dropPadY: [
+        [69, 71],
+        [34, 36],
+        [-1, -3],
+        [-36, -38],
+        [-71, -73],
+        [-106, -108],
+        [-141, -143],
+        [-176, -178]
     ]
   }
 
-  handleDrag = (e, ui) => {
+  handleDrag = (e, ui, z) => {
     const { x, y } = this.state.deltaPosition
     const landings = JSON.parse(JSON.stringify(this.state.tileLandingBackgrounds))
+    console.log('x, y: ', x, y)
     if (x > -148 && x < -144) {
         if (y > 69 && y < 71) {
             landings[0] = 'green'
@@ -91,7 +102,7 @@ class GameScreen extends React.Component {
               className='ingredient'
             ></div>
           </Draggable>
-          <Draggable>
+          <Draggable onDrag={this.handleDrag} >
             <div
               style={{
                 backgroundImage: 'url(' + lettuce + ')',
@@ -100,7 +111,7 @@ class GameScreen extends React.Component {
               className='ingredient'
             ></div>
           </Draggable>
-          <Draggable>
+          <Draggable onDrag={this.handleDrag} >
             <div
               style={{
                 backgroundImage: 'url(' + egg + ')',
@@ -109,7 +120,7 @@ class GameScreen extends React.Component {
               className='ingredient'
             ></div>
           </Draggable>
-          <Draggable>
+          <Draggable onDrag={this.handleDrag} >
             <div
               style={{
                 backgroundImage: 'url(' + bacon + ')',
@@ -118,7 +129,7 @@ class GameScreen extends React.Component {
               className='ingredient'
             ></div>
           </Draggable>
-          <Draggable>
+          <Draggable onDrag={this.handleDrag} >
             <div
               style={{
                 backgroundImage: 'url(' + onions + ')',
@@ -127,7 +138,7 @@ class GameScreen extends React.Component {
               className='ingredient'
             ></div>
           </Draggable>
-          <Draggable>
+          <Draggable onDrag={this.handleDrag} >
             <div
               style={{
                 backgroundImage: 'url(' + cheese + ')',
@@ -136,7 +147,7 @@ class GameScreen extends React.Component {
               className='ingredient'
             ></div>
           </Draggable>
-          <Draggable>
+          <Draggable onDrag={this.handleDrag} >
             <div
               style={{
                 backgroundImage: 'url(' + avocado + ')',
@@ -145,7 +156,7 @@ class GameScreen extends React.Component {
               className='ingredient'
             ></div>
           </Draggable>
-          <Draggable>
+          <Draggable onDrag={this.handleDrag} >
             <div
               style={{
                 backgroundImage: 'url(' + tomato + ')',
