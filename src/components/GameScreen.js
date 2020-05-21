@@ -32,21 +32,25 @@ class GameScreen extends React.Component {
     if (x > -148 && x < -144) {
         if (y > 69 && y < 71) {
             landings[0] = 'green'
+        } else {
+            landings[0] = 'silver'
         }
         if (y > 105 && y < 107) {
             landings[1] = 'green'
+        } else {
+            landings[1] = 'silver'
         }
         if (y > 141 && y < 143) {
             landings[2] = 'green'
+        } else {
+            landings[2] = 'silver'
         }
         if (y > 177 && y < 179) {
             landings[3] = 'green'
+        } else {
+            landings[3] = 'silver'
         }
-    } else {
-        for (let i = 0; i < landings.length; i++) {
-            landings[i] = 'silver'
-        }
-    }
+    } 
     this.setState({
       tileLandingBackgrounds: landings,
       deltaPosition: {
