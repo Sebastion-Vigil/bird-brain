@@ -41,32 +41,19 @@ class GameScreen extends React.Component {
     const whichTile = parseInt(ui.node.id)
     const yMinMax = []
     let seed = this.state.dropPadY[whichTile][0]
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 4; i++) {
       yMinMax.push([seed, seed + 2])
-      seed += 35
+      seed += 36
     }
     console.log('yMinMax: ', yMinMax)
     console.log(x, y)
     if (x > -148 && x < -144) {
-      if (y > 69 && y < 71) {
-        landings[0] = 'green'
-      } else {
-        landings[0] = 'silver'
-      }
-      if (y > 105 && y < 107) {
-        landings[1] = 'green'
-      } else {
-        landings[1] = 'silver'
-      }
-      if (y > 141 && y < 143) {
-        landings[2] = 'green'
-      } else {
-        landings[2] = 'silver'
-      }
-      if (y > 177 && y < 179) {
-        landings[3] = 'green'
-      } else {
-        landings[3] = 'silver'
+      for (let i = 0; i < yMinMax.length; i++) {
+        if (y > yMinMax[i][0] && y < yMinMax[i][1]) {
+          landings[i] = 'green'
+        } else {
+          landings[i] = 'silver'
+        }
       }
     }
     this.setState({
