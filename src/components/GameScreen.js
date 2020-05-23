@@ -1,6 +1,8 @@
 import React from 'react'
 import Draggable from 'react-draggable'
 
+import Test from './Test.js'
+
 import '../css/GameScreen.css'
 
 import lettuce from '../images/Lettuce.png'
@@ -18,50 +20,55 @@ class GameScreen extends React.Component {
       x: 0,
       y: 0
     },
-    tileLandingBackgrounds: [
-        'silver',
-        'silver',
-        'silver',
-        'silver'
-    ],
+    tileLandingBackgrounds: ['silver', 'silver', 'silver', 'silver'],
     dropPadY: [
-        [69, 71],
-        [34, 36],
-        [-1, -3],
-        [-36, -38],
-        [-71, -73],
-        [-106, -108],
-        [-141, -143],
-        [-176, -178]
+      // starting points for y min/max of each tile
+      [69, 71],
+      [34, 36],
+      [-3, -1],
+      [-38, -36],
+      [-73, -71],
+      [-108, -106],
+      [-143, -141],
+      [-178, -176]
     ]
   }
 
-  handleDrag = (e, ui, z) => {
+  handleDrag = (e, ui) => {
     const { x, y } = this.state.deltaPosition
     const landings = JSON.parse(JSON.stringify(this.state.tileLandingBackgrounds))
-    console.log('x, y: ', x, y)
+    // damn all I want to know is which FUCKING tile I'm grabbing
+    const whichTile = parseInt(ui.node.id)
+    const yMinMax = []
+    let seed = this.state.dropPadY[whichTile][0]
+    for (let i = 0; i < 8; i++) {
+      yMinMax.push([seed, seed + 2])
+      seed += 35
+    }
+    console.log('yMinMax: ', yMinMax)
+    console.log(x, y)
     if (x > -148 && x < -144) {
-        if (y > 69 && y < 71) {
-            landings[0] = 'green'
-        } else {
-            landings[0] = 'silver'
-        }
-        if (y > 105 && y < 107) {
-            landings[1] = 'green'
-        } else {
-            landings[1] = 'silver'
-        }
-        if (y > 141 && y < 143) {
-            landings[2] = 'green'
-        } else {
-            landings[2] = 'silver'
-        }
-        if (y > 177 && y < 179) {
-            landings[3] = 'green'
-        } else {
-            landings[3] = 'silver'
-        }
-    } 
+      if (y > 69 && y < 71) {
+        landings[0] = 'green'
+      } else {
+        landings[0] = 'silver'
+      }
+      if (y > 105 && y < 107) {
+        landings[1] = 'green'
+      } else {
+        landings[1] = 'silver'
+      }
+      if (y > 141 && y < 143) {
+        landings[2] = 'green'
+      } else {
+        landings[2] = 'silver'
+      }
+      if (y > 177 && y < 179) {
+        landings[3] = 'green'
+      } else {
+        landings[3] = 'silver'
+      }
+    }
     this.setState({
       tileLandingBackgrounds: landings,
       deltaPosition: {
@@ -77,92 +84,112 @@ class GameScreen extends React.Component {
         <div className='food-quizz'>
           <div className='text'>What comes on a BLTA Croissant?</div>
           <div className='hint top'></div>
-          <div style={{
+          <div
+            style={{
               backgroundColor: this.state.tileLandingBackgrounds[0]
-          }} className='ingredient-landing'></div>
-          <div style={{
+            }}
+            className='ingredient-landing'
+          ></div>
+          <div
+            style={{
               backgroundColor: this.state.tileLandingBackgrounds[1]
-          }} className='ingredient-landing'></div>
-          <div style={{
+            }}
+            className='ingredient-landing'
+          ></div>
+          <div
+            style={{
               backgroundColor: this.state.tileLandingBackgrounds[2]
-          }} className='ingredient-landing'></div>
-          <div style={{
+            }}
+            className='ingredient-landing'
+          ></div>
+          <div
+            style={{
               backgroundColor: this.state.tileLandingBackgrounds[3]
-          }} className='ingredient-landing'></div>
+            }}
+            className='ingredient-landing'
+          ></div>
           <div className='hint bottom'></div>
           <div className='text'>Drag correct ingredients, in order.</div>
         </div>
         <div className='ingredients'>
-          <Draggable onDrag={this.handleDrag} >
+          <Draggable onDrag={this.handleDrag}>
             <div
               style={{
                 backgroundImage: 'url(' + pickles + ')',
                 backgroundSize: '100% 100%'
               }}
               className='ingredient'
+              id='0'
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag} >
+          <Draggable onDrag={this.handleDrag}>
             <div
               style={{
                 backgroundImage: 'url(' + lettuce + ')',
                 backgroundSize: '100% 100%'
               }}
               className='ingredient'
+              id='1'
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag} >
+          <Draggable onDrag={this.handleDrag}>
             <div
               style={{
                 backgroundImage: 'url(' + egg + ')',
                 backgroundSize: '100% 100%'
               }}
               className='ingredient'
+              id='2'
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag} >
+          <Draggable onDrag={this.handleDrag}>
             <div
               style={{
                 backgroundImage: 'url(' + bacon + ')',
                 backgroundSize: '100% 100%'
               }}
               className='ingredient'
+              id='3'
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag} >
+          <Draggable onDrag={this.handleDrag}>
             <div
               style={{
                 backgroundImage: 'url(' + onions + ')',
                 backgroundSize: '100% 100%'
               }}
               className='ingredient'
+              id='4'
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag} >
+          <Draggable onDrag={this.handleDrag}>
             <div
               style={{
                 backgroundImage: 'url(' + cheese + ')',
                 backgroundSize: '100% 100%'
               }}
               className='ingredient'
+              id='5'
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag} >
+          <Draggable onDrag={this.handleDrag}>
             <div
               style={{
                 backgroundImage: 'url(' + avocado + ')',
                 backgroundSize: '100% 100%'
               }}
               className='ingredient'
+              id='6'
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag} >
+          <Draggable onDrag={this.handleDrag}>
             <div
               style={{
                 backgroundImage: 'url(' + tomato + ')',
                 backgroundSize: '100% 100%'
               }}
               className='ingredient'
+              id='7'
             ></div>
           </Draggable>
         </div>
