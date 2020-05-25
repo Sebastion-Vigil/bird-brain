@@ -1,5 +1,4 @@
-.game-screen {
-    
+.game-screen {    
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -13,7 +12,7 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center; 
-  height: 280px;
+  height: 300px;
   width: 175px;
   /* border: 1px solid blue; */
 }
@@ -29,7 +28,7 @@
 
 .ingredient-landing {
   width: 100px;
-  height: 32px;
+  height: 40px;
 }
 /* croissant top & bottom */
 .hint {
@@ -54,7 +53,7 @@
   justify-content: space-evenly;
   align-items: center;
   width: 100px;
-  height: 290px;
+  height: 300px;
   /* border: 1px solid blue; */
 }
 

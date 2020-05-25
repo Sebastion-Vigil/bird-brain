@@ -1,8 +1,6 @@
 import React from 'react'
 import Draggable from 'react-draggable'
 
-import Test from './Test.js'
-
 import '../css/GameScreen.css'
 
 import lettuce from '../images/Lettuce.png'
@@ -16,38 +14,46 @@ import cheese from '../images/Cheese.png'
 
 class GameScreen extends React.Component {
   state = {
+    activeDrags: 0,
     deltaPosition: {
       x: 0,
       y: 0
     },
+    controlledPosition: {
+      x: -400, y: 200
+    },
     tileLandingBackgrounds: ['silver', 'silver', 'silver', 'silver'],
     dropPadY: [
       // starting points for y min/max of each tile
-      [69, 71],
-      [34, 36],
-      [-3, -1],
-      [-38, -36],
-      [-73, -71],
-      [-108, -106],
-      [-143, -141],
-      [-178, -176]
+      65, 30, 0, -35, -71, -106, -141, -176
     ]
   }
+  
+  onStart = () => {
+    console.log('Started!')
+    let updatedActiveDrags = this.state.activeDrags
+    updatedActiveDrags += 1
+    this.setState({activeDrags: updatedActiveDrags});
+  };
+
+  onStop = (e, ui) => {
+    console.log('Stopped!')
+    let updatedActiveDrags = this.state.activeDrags
+    this.setState({activeDrags: updatedActiveDrags});
+  };
 
   handleDrag = (e, ui) => {
-    const { x, y } = this.state.deltaPosition
+    const { x, y } = this.state.deltaPosition  // object destructuring
     const landings = JSON.parse(JSON.stringify(this.state.tileLandingBackgrounds))
-    // damn all I want to know is which FUCKING tile I'm grabbing
     const whichTile = parseInt(ui.node.id)
     const yMinMax = []
-    let seed = this.state.dropPadY[whichTile][0]
+    let seed = this.state.dropPadY[whichTile]
+    // console.log('x: ', x, 'y: ', y)
     for (let i = 0; i < 4; i++) {
-      yMinMax.push([seed, seed + 2])
-      seed += 36
+      yMinMax.push([seed, seed + 7])
+      seed += 37
     }
-    console.log('yMinMax: ', yMinMax)
-    console.log(x, y)
-    if (x > -148 && x < -144) {
+    if (x > -150 && x < -140) {
       for (let i = 0; i < yMinMax.length; i++) {
         if (y > yMinMax[i][0] && y < yMinMax[i][1]) {
           landings[i] = 'green'
@@ -56,6 +62,7 @@ class GameScreen extends React.Component {
         }
       }
     }
+    this.props.update([x + ui.deltaX, y + ui.deltaY])
     this.setState({
       tileLandingBackgrounds: landings,
       deltaPosition: {
@@ -66,6 +73,7 @@ class GameScreen extends React.Component {
   }
 
   render () {
+    const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
     return (
       <div className='game-screen'>
         <div className='food-quizz'>
@@ -99,7 +107,7 @@ class GameScreen extends React.Component {
           <div className='text'>Drag correct ingredients, in order.</div>
         </div>
         <div className='ingredients'>
-          <Draggable onDrag={this.handleDrag}>
+          <Draggable onDrag={this.handleDrag} {...dragHandlers} >
             <div
               style={{
                 backgroundImage: 'url(' + pickles + ')',
@@ -107,9 +115,10 @@ class GameScreen extends React.Component {
               }}
               className='ingredient'
               id='0'
+              onClick={this.handleDrop}
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag}>
+          <Draggable onDrag={this.handleDrag} {...dragHandlers} >
             <div
               style={{
                 backgroundImage: 'url(' + lettuce + ')',
@@ -119,7 +128,7 @@ class GameScreen extends React.Component {
               id='1'
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag}>
+          <Draggable onDrag={this.handleDrag} {...dragHandlers} >
             <div
               style={{
                 backgroundImage: 'url(' + egg + ')',
@@ -129,7 +138,7 @@ class GameScreen extends React.Component {
               id='2'
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag}>
+          <Draggable onDrag={this.handleDrag} {...dragHandlers} >
             <div
               style={{
                 backgroundImage: 'url(' + bacon + ')',
@@ -139,7 +148,7 @@ class GameScreen extends React.Component {
               id='3'
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag}>
+          <Draggable onDrag={this.handleDrag} {...dragHandlers} >
             <div
               style={{
                 backgroundImage: 'url(' + onions + ')',
@@ -149,7 +158,7 @@ class GameScreen extends React.Component {
               id='4'
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag}>
+          <Draggable onDrag={this.handleDrag} {...dragHandlers} >
             <div
               style={{
                 backgroundImage: 'url(' + cheese + ')',
@@ -159,7 +168,7 @@ class GameScreen extends React.Component {
               id='5'
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag}>
+          <Draggable onDrag={this.handleDrag} {...dragHandlers} >
             <div
               style={{
                 backgroundImage: 'url(' + avocado + ')',
@@ -169,7 +178,7 @@ class GameScreen extends React.Component {
               id='6'
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag}>
+          <Draggable onDrag={this.handleDrag} {...dragHandlers} >
             <div
               style={{
                 backgroundImage: 'url(' + tomato + ')',
