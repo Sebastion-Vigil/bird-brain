@@ -25,7 +25,7 @@ class GameScreen extends React.Component {
     tileLandingBackgrounds: ['silver', 'silver', 'silver', 'silver'],
     dropPadY: [
       // starting points for y min/max of each tile
-      65, 30, 0, -35, -71, -106, -141, -176
+      58, 22, -15, -52, -88, -125, -162, -198
     ]
   }
   
@@ -50,8 +50,8 @@ class GameScreen extends React.Component {
     let seed = this.state.dropPadY[whichTile]
     // console.log('x: ', x, 'y: ', y)
     for (let i = 0; i < 4; i++) {
-      yMinMax.push([seed, seed + 7])
-      seed += 37
+      yMinMax.push([seed, seed + 40])
+      seed += 42
     }
     if (x > -150 && x < -140) {
       for (let i = 0; i < yMinMax.length; i++) {
