@@ -12,6 +12,10 @@ import egg from '../images/Egg.png'
 import onions from '../images/Onions.png'
 import cheese from '../images/Cheese.png'
 
+// this is why i hate using libraries for drag and drop
+// holy mother fucking shit just to get a handle on the x/y position of each tile over
+// each drop pad. this is why i should ALWAYS reinvent the wheel.
+
 class GameScreen extends React.Component {
   state = {
     activeDrags: 0,
@@ -20,42 +24,55 @@ class GameScreen extends React.Component {
       y: 0
     },
     controlledPosition: {
-      x: -400, y: 200
+      x: -400,
+      y: 200
     },
     tileLandingBackgrounds: ['silver', 'silver', 'silver', 'silver'],
     dropPadY: [
       // starting points for y min/max of each tile
-      58, 22, -15, -52, -88, -125, -162, -198
+      58,
+      22,
+      -15,
+      -52,
+      -88,
+      -125,
+      -162,
+      -198
     ]
   }
-  
+
   onStart = () => {
-    console.log('Started!')
+    // console.log('Started!')
     let updatedActiveDrags = this.state.activeDrags
     updatedActiveDrags += 1
-    this.setState({activeDrags: updatedActiveDrags});
-  };
+    this.setState({ activeDrags: updatedActiveDrags })
+  }
 
   onStop = (e, ui) => {
-    console.log('Stopped!')
+    // console.log('Stopped!')
+    console.log('ui: ', ui)
     let updatedActiveDrags = this.state.activeDrags
-    this.setState({activeDrags: updatedActiveDrags});
-  };
+    updatedActiveDrags -= 1
+    this.setState({
+      activeDrags: updatedActiveDrags
+    })
+  }
 
   handleDrag = (e, ui) => {
-    const { x, y } = this.state.deltaPosition  // object destructuring
-    const landings = JSON.parse(JSON.stringify(this.state.tileLandingBackgrounds))
-    const whichTile = parseInt(ui.node.id)
-    const yMinMax = []
-    let seed = this.state.dropPadY[whichTile]
+    const { x, y } = this.state.deltaPosition // object destructuring
+    const landings = JSON.parse(
+      JSON.stringify(this.state.tileLandingBackgrounds)
+    )
     // console.log('x: ', x, 'y: ', y)
-    for (let i = 0; i < 4; i++) {
-      yMinMax.push([seed, seed + 40])
-      seed += 42
-    }
+
     if (x > -150 && x < -140) {
-      for (let i = 0; i < yMinMax.length; i++) {
-        if (y > yMinMax[i][0] && y < yMinMax[i][1]) {
+      for (let i = 0; i < 8; i++) {
+        if (
+          (y > 58 && y < 98) ||
+          (y > 100 && y < 140) ||
+          (y > 142 && y < 182) ||
+          (y > 184 && y < 224)
+        ) {
           landings[i] = 'green'
         } else {
           landings[i] = 'silver'
@@ -73,7 +90,7 @@ class GameScreen extends React.Component {
   }
 
   render () {
-    const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
+    const dragHandlers = { onStart: this.onStart, onStop: this.onStop }
     return (
       <div className='game-screen'>
         <div className='food-quizz'>
@@ -107,7 +124,7 @@ class GameScreen extends React.Component {
           <div className='text'>Drag correct ingredients, in order.</div>
         </div>
         <div className='ingredients'>
-          <Draggable onDrag={this.handleDrag} {...dragHandlers} >
+          <Draggable onDrag={this.handleDrag} {...dragHandlers}>
             <div
               style={{
                 backgroundImage: 'url(' + pickles + ')',
@@ -118,7 +135,7 @@ class GameScreen extends React.Component {
               onClick={this.handleDrop}
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag} {...dragHandlers} >
+          <Draggable onDrag={this.handleDrag} {...dragHandlers}>
             <div
               style={{
                 backgroundImage: 'url(' + lettuce + ')',
@@ -128,7 +145,7 @@ class GameScreen extends React.Component {
               id='1'
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag} {...dragHandlers} >
+          <Draggable onDrag={this.handleDrag} {...dragHandlers}>
             <div
               style={{
                 backgroundImage: 'url(' + egg + ')',
@@ -138,7 +155,7 @@ class GameScreen extends React.Component {
               id='2'
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag} {...dragHandlers} >
+          <Draggable onDrag={this.handleDrag} {...dragHandlers}>
             <div
               style={{
                 backgroundImage: 'url(' + bacon + ')',
@@ -148,7 +165,7 @@ class GameScreen extends React.Component {
               id='3'
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag} {...dragHandlers} >
+          <Draggable onDrag={this.handleDrag} {...dragHandlers}>
             <div
               style={{
                 backgroundImage: 'url(' + onions + ')',
@@ -158,7 +175,7 @@ class GameScreen extends React.Component {
               id='4'
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag} {...dragHandlers} >
+          <Draggable onDrag={this.handleDrag} {...dragHandlers}>
             <div
               style={{
                 backgroundImage: 'url(' + cheese + ')',
@@ -168,7 +185,7 @@ class GameScreen extends React.Component {
               id='5'
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag} {...dragHandlers} >
+          <Draggable onDrag={this.handleDrag} {...dragHandlers}>
             <div
               style={{
                 backgroundImage: 'url(' + avocado + ')',
@@ -178,7 +195,7 @@ class GameScreen extends React.Component {
               id='6'
             ></div>
           </Draggable>
-          <Draggable onDrag={this.handleDrag} {...dragHandlers} >
+          <Draggable onDrag={this.handleDrag} {...dragHandlers}>
             <div
               style={{
                 backgroundImage: 'url(' + tomato + ')',
