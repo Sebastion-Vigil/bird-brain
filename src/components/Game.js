@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactCursorPosition from 'react-cursor-position'
 
 import Logo from './Logo.js'
 import GameScreen from './GameScreen.js'
@@ -19,11 +20,13 @@ class Game extends React.Component {
       y: newXY[1]
     })
   }
-  render () {
+  render() {
     return (
       <div className='game'>
         <Logo />
-        <GameScreen update={this.update} />
+        <ReactCursorPosition>
+          <GameScreen update={this.update} />
+        </ReactCursorPosition>
         <AnswerScreen txt={`x: ` + this.state.x + ` y: ` + this.state.y} />
       </div>
     )
