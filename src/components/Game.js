@@ -14,7 +14,6 @@ class Game extends React.Component {
     y: 0
   }
   update = (newXY) => {
-    console.log(newXY)
     this.setState({
       x: newXY[0],
       y: newXY[1]

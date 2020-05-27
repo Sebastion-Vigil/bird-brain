@@ -12,10 +12,6 @@ import egg from '../images/Egg.png'
 import onions from '../images/Onions.png'
 import cheese from '../images/Cheese.png'
 
-// this is why i hate using libraries for drag and drop
-// holy mother fucking shit just to get a handle on the x/y position of each tile over
-// each drop pad. this is why i should ALWAYS reinvent the wheel.
-
 class GameScreen extends React.Component {
   state = {
     activeDrags: 0,
@@ -27,30 +23,16 @@ class GameScreen extends React.Component {
       x: -400,
       y: 200
     },
-    tileLandingBackgrounds: ['silver', 'silver', 'silver', 'silver'],
-    dropPadY: [
-      // starting points for y min/max of each tile
-      58,
-      22,
-      -15,
-      -52,
-      -88,
-      -125,
-      -162,
-      -198
-    ]
+    tileLandingBackgrounds: ['silver', 'silver', 'silver', 'silver']
   }
 
   onStart = () => {
-    // console.log('Started!')
     let updatedActiveDrags = this.state.activeDrags
     updatedActiveDrags += 1
     this.setState({ activeDrags: updatedActiveDrags })
   }
 
   onStop = (e, ui) => {
-    // console.log('Stopped!')
-    console.log('ui: ', ui)
     let updatedActiveDrags = this.state.activeDrags
     updatedActiveDrags -= 1
     this.setState({
@@ -63,23 +45,24 @@ class GameScreen extends React.Component {
     const landings = JSON.parse(
       JSON.stringify(this.state.tileLandingBackgrounds)
     )
-    // console.log('x: ', x, 'y: ', y)
-
-    if (x > -150 && x < -140) {
-      for (let i = 0; i < 8; i++) {
-        if (
-          (y > 58 && y < 98) ||
-          (y > 100 && y < 140) ||
-          (y > 142 && y < 182) ||
-          (y > 184 && y < 224)
-        ) {
-          landings[i] = 'green'
+    const cursorX = this.props.position.x
+    const cursorY = this.props.position.y
+    const yParams = [
+      [65, 104],
+      [108, 146],
+      [152, 190],
+      [194, 234]
+    ]
+    if (cursorX > 47 && cursorX < 144) {
+      for (let i = 0; i < 4; i++) {
+        if (cursorY > yParams[i][0] && cursorY < yParams[i][1]) {
+          landings[i] = 'gold'
         } else {
           landings[i] = 'silver'
         }
       }
     }
-    this.props.update([x + ui.deltaX, y + ui.deltaY])
+    this.props.update([this.props.position.x, this.props.position.y])
     this.setState({
       tileLandingBackgrounds: landings,
       deltaPosition: {
