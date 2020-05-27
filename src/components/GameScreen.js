@@ -23,7 +23,34 @@ class GameScreen extends React.Component {
       x: -400,
       y: 200
     },
-    tileLandingBackgrounds: ['silver', 'silver', 'silver', 'silver']
+    tileLandingBackgrounds: ['silver', 'silver', 'silver', 'silver'],
+    yMinMax: [
+      [65, 104],
+      [108, 146],
+      [152, 190],
+      [194, 234]
+    ],
+    dropPadImages: [
+      pickles,
+      lettuce,
+      egg,
+      bacon,
+      onions,
+      cheese,
+      avocado,
+      tomato
+    ],
+    dropped: ['', '', '', ''],
+    tileVisibility: [
+      'visible',
+      'visible',
+      'visible',
+      'visible',
+      'visible',
+      'visible',
+      'visible',
+      'visible'
+    ]
   }
 
   onStart = () => {
@@ -35,27 +62,38 @@ class GameScreen extends React.Component {
   onStop = (e, ui) => {
     let updatedActiveDrags = this.state.activeDrags
     updatedActiveDrags -= 1
+    const dropPadImgIndex = parseInt(ui.node.id)
+    const cursorX = this.props.position.x
+    const cursorY = this.props.position.y
+    const yMinMax = this.state.yMinMax
+    const dropped = JSON.parse(JSON.stringify(this.state.dropped))
+    const visibility = JSON.parse(JSON.stringify(this.state.tileVisibility))
+    if (cursorX > 47 && cursorX < 144) {
+      for (let i = 0; i < 4; i++) {
+        if (cursorY > yMinMax[i][0] && cursorY < yMinMax[i][1]) {
+          dropped[i] = this.state.dropPadImages[dropPadImgIndex]
+          visibility[dropPadImgIndex] = 'hidden'
+        }
+      }
+    }
     this.setState({
-      activeDrags: updatedActiveDrags
+      activeDrags: updatedActiveDrags,
+      dropped: dropped,
+      tileVisibility: visibility
     })
   }
 
-  handleDrag = (e, ui) => {
-    const { x, y } = this.state.deltaPosition // object destructuring
+  detectOverDropPad = () => {
+    // cool stuff coming soon
     const landings = JSON.parse(
       JSON.stringify(this.state.tileLandingBackgrounds)
     )
     const cursorX = this.props.position.x
     const cursorY = this.props.position.y
-    const yParams = [
-      [65, 104],
-      [108, 146],
-      [152, 190],
-      [194, 234]
-    ]
+    const yMinMax = this.state.yMinMax
     if (cursorX > 47 && cursorX < 144) {
       for (let i = 0; i < 4; i++) {
-        if (cursorY > yParams[i][0] && cursorY < yParams[i][1]) {
+        if (cursorY > yMinMax[i][0] && cursorY < yMinMax[i][1]) {
           landings[i] = 'gold'
         } else {
           landings[i] = 'silver'
@@ -64,14 +102,22 @@ class GameScreen extends React.Component {
     }
     this.props.update([this.props.position.x, this.props.position.y])
     this.setState({
-      tileLandingBackgrounds: landings,
+      tileLandingBackgrounds: landings
+    })
+  }
+
+  handleDrag = (e, ui) => {
+    const { x, y } = this.state.deltaPosition // object destructuring
+    this.props.update([this.props.position.x, this.props.position.y])
+    this.detectOverDropPad()
+    this.setState({
       deltaPosition: {
         x: x + ui.deltaX,
         y: y + ui.deltaY
       }
     })
   }
-
+  // Jesus is LORD
   render () {
     const dragHandlers = { onStart: this.onStart, onStop: this.onStop }
     return (
@@ -81,25 +127,33 @@ class GameScreen extends React.Component {
           <div className='hint top'></div>
           <div
             style={{
-              backgroundColor: this.state.tileLandingBackgrounds[0]
+              backgroundColor: this.state.tileLandingBackgrounds[0],
+              backgroundImage: `url(` + this.state.dropped[0] + `)`,
+              backgroundSize: '100% 100%'
             }}
             className='ingredient-landing'
           ></div>
           <div
             style={{
-              backgroundColor: this.state.tileLandingBackgrounds[1]
+              backgroundColor: this.state.tileLandingBackgrounds[1],
+              backgroundImage: `url(` + this.state.dropped[1] + `)`,
+              backgroundSize: '100% 100%'
             }}
             className='ingredient-landing'
           ></div>
           <div
             style={{
-              backgroundColor: this.state.tileLandingBackgrounds[2]
+              backgroundColor: this.state.tileLandingBackgrounds[2],
+              backgroundImage: `url(` + this.state.dropped[2] + `)`,
+              backgroundSize: '100% 100%'
             }}
             className='ingredient-landing'
           ></div>
           <div
             style={{
-              backgroundColor: this.state.tileLandingBackgrounds[3]
+              backgroundColor: this.state.tileLandingBackgrounds[3],
+              backgroundImage: `url(` + this.state.dropped[3] + `)`,
+              backgroundSize: '100% 100%'
             }}
             className='ingredient-landing'
           ></div>
@@ -111,7 +165,8 @@ class GameScreen extends React.Component {
             <div
               style={{
                 backgroundImage: 'url(' + pickles + ')',
-                backgroundSize: '100% 100%'
+                backgroundSize: '100% 100%',
+                visibility: this.state.tileVisibility[0]
               }}
               className='ingredient'
               id='0'
@@ -122,7 +177,8 @@ class GameScreen extends React.Component {
             <div
               style={{
                 backgroundImage: 'url(' + lettuce + ')',
-                backgroundSize: '100% 100%'
+                backgroundSize: '100% 100%',
+                visibility: this.state.tileVisibility[1]
               }}
               className='ingredient'
               id='1'
@@ -132,7 +188,8 @@ class GameScreen extends React.Component {
             <div
               style={{
                 backgroundImage: 'url(' + egg + ')',
-                backgroundSize: '100% 100%'
+                backgroundSize: '100% 100%',
+                visibility: this.state.tileVisibility[2]
               }}
               className='ingredient'
               id='2'
@@ -142,7 +199,8 @@ class GameScreen extends React.Component {
             <div
               style={{
                 backgroundImage: 'url(' + bacon + ')',
-                backgroundSize: '100% 100%'
+                backgroundSize: '100% 100%',
+                visibility: this.state.tileVisibility[3]
               }}
               className='ingredient'
               id='3'
@@ -152,7 +210,8 @@ class GameScreen extends React.Component {
             <div
               style={{
                 backgroundImage: 'url(' + onions + ')',
-                backgroundSize: '100% 100%'
+                backgroundSize: '100% 100%',
+                visibility: this.state.tileVisibility[4]
               }}
               className='ingredient'
               id='4'
@@ -162,7 +221,8 @@ class GameScreen extends React.Component {
             <div
               style={{
                 backgroundImage: 'url(' + cheese + ')',
-                backgroundSize: '100% 100%'
+                backgroundSize: '100% 100%',
+                visibility: this.state.tileVisibility[5]
               }}
               className='ingredient'
               id='5'
@@ -172,7 +232,8 @@ class GameScreen extends React.Component {
             <div
               style={{
                 backgroundImage: 'url(' + avocado + ')',
-                backgroundSize: '100% 100%'
+                backgroundSize: '100% 100%',
+                visibility: this.state.tileVisibility[6]
               }}
               className='ingredient'
               id='6'
@@ -182,7 +243,8 @@ class GameScreen extends React.Component {
             <div
               style={{
                 backgroundImage: 'url(' + tomato + ')',
-                backgroundSize: '100% 100%'
+                backgroundSize: '100% 100%',
+                visibility: this.state.tileVisibility[7]
               }}
               className='ingredient'
               id='7'
