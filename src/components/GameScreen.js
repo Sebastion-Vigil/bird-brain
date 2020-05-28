@@ -40,7 +40,8 @@ class GameScreen extends React.Component {
       avocado,
       tomato
     ],
-    dropped: ['', '', '', ''],
+    dropped: ['', '', '', ''], // images to go onto dropPad
+    dropPadFull: [false, false, false, false], // is that space already occupied by another tile?
     tileVisibility: [
       'visible',
       'visible',
@@ -60,6 +61,7 @@ class GameScreen extends React.Component {
   }
 
   onStop = (e, ui) => {
+    // edge case => check if tile already down
     let updatedActiveDrags = this.state.activeDrags
     updatedActiveDrags -= 1
     const dropPadImgIndex = parseInt(ui.node.id)
@@ -68,23 +70,41 @@ class GameScreen extends React.Component {
     const yMinMax = this.state.yMinMax
     const dropped = JSON.parse(JSON.stringify(this.state.dropped))
     const visibility = JSON.parse(JSON.stringify(this.state.tileVisibility))
+    const dropPadFull = JSON.parse(JSON.stringify(this.state.dropPadFull))
     if (cursorX > 47 && cursorX < 144) {
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 4; i++) { // i here accesses drop pad positions
         if (cursorY > yMinMax[i][0] && cursorY < yMinMax[i][1]) {
-          dropped[i] = this.state.dropPadImages[dropPadImgIndex]
-          visibility[dropPadImgIndex] = 'hidden'
+          // add conditional logic here => determine if tile already dropped
+          // also need to add logic to determine if pad full & check if winner/loser
+          if (!dropPadFull[i]) {
+            dropped[i] = this.state.dropPadImages[dropPadImgIndex]
+            visibility[dropPadImgIndex] = 'hidden'
+            dropPadFull[i] = true
+          }
         }
       }
     }
     this.setState({
       activeDrags: updatedActiveDrags,
       dropped: dropped,
-      tileVisibility: visibility
+      tileVisibility: visibility,
+      dropPadFull: dropPadFull
+    })
+  }
+
+  handleDrag = (e, ui) => {
+    const { x, y } = this.state.deltaPosition // object destructuring
+    this.props.update([this.props.position.x, this.props.position.y])
+    this.detectOverDropPad()
+    this.setState({
+      deltaPosition: {
+        x: x + ui.deltaX,
+        y: y + ui.deltaY
+      }
     })
   }
 
   detectOverDropPad = () => {
-    // cool stuff coming soon
     const landings = JSON.parse(
       JSON.stringify(this.state.tileLandingBackgrounds)
     )
@@ -100,25 +120,13 @@ class GameScreen extends React.Component {
         }
       }
     }
-    this.props.update([this.props.position.x, this.props.position.y])
     this.setState({
       tileLandingBackgrounds: landings
     })
   }
-
-  handleDrag = (e, ui) => {
-    const { x, y } = this.state.deltaPosition // object destructuring
-    this.props.update([this.props.position.x, this.props.position.y])
-    this.detectOverDropPad()
-    this.setState({
-      deltaPosition: {
-        x: x + ui.deltaX,
-        y: y + ui.deltaY
-      }
-    })
-  }
   // Jesus is LORD
   render () {
+    // refactor! 
     const dragHandlers = { onStart: this.onStart, onStop: this.onStop }
     return (
       <div className='game-screen'>
