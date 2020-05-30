@@ -14,6 +14,7 @@ import cheese from '../images/Cheese.png'
 
 class GameScreen extends React.Component {
   state = {
+    message: '',
     activeDrags: 0,
     deltaPosition: {
       x: 0,
@@ -42,6 +43,7 @@ class GameScreen extends React.Component {
     ],
     dropped: ['', '', '', ''], // images to go onto dropPad
     dropPadFull: [false, false, false, false], // is that space already occupied by another tile?
+    full: 0, // getting messy => when this hits four I know the dropPad is full
     tileVisibility: [
       'visible',
       'visible',
@@ -53,6 +55,8 @@ class GameScreen extends React.Component {
       'visible'
     ]
   }
+  
+  
 
   onStart = () => {
     let updatedActiveDrags = this.state.activeDrags
@@ -71,6 +75,7 @@ class GameScreen extends React.Component {
     const dropped = JSON.parse(JSON.stringify(this.state.dropped))
     const visibility = JSON.parse(JSON.stringify(this.state.tileVisibility))
     const dropPadFull = JSON.parse(JSON.stringify(this.state.dropPadFull))
+    let full = this.state.full
     if (cursorX > 47 && cursorX < 144) {
       for (let i = 0; i < 4; i++) { // i here accesses drop pad positions
         if (cursorY > yMinMax[i][0] && cursorY < yMinMax[i][1]) {
@@ -80,21 +85,33 @@ class GameScreen extends React.Component {
             dropped[i] = this.state.dropPadImages[dropPadImgIndex]
             visibility[dropPadImgIndex] = 'hidden'
             dropPadFull[i] = true
+            full += 1
+            if (full === 4) {
+              console.log('drop pad full')
+              this.detectDropPadFull()
+            }
           }
         }
       }
     }
+    this.props.update(this.state.message)
     this.setState({
       activeDrags: updatedActiveDrags,
       dropped: dropped,
       tileVisibility: visibility,
-      dropPadFull: dropPadFull
+      dropPadFull: dropPadFull,
+      full: full
+    })
+  }
+
+  detectDropPadFull = () => {
+    this.setState({
+      message: 'drop pad full'
     })
   }
 
   handleDrag = (e, ui) => {
     const { x, y } = this.state.deltaPosition // object destructuring
-    this.props.update([this.props.position.x, this.props.position.y])
     this.detectOverDropPad()
     this.setState({
       deltaPosition: {
@@ -124,6 +141,7 @@ class GameScreen extends React.Component {
       tileLandingBackgrounds: landings
     })
   }
+
   // Jesus is LORD
   render () {
     // refactor! 

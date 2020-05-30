@@ -10,13 +10,11 @@ import '../css/Game.css'
 class Game extends React.Component {
 
   state = {
-    x: 0,
-    y: 0
+    message: 'hello world'
   }
-  update = (newXY) => {
+  update = (msg) => {
     this.setState({
-      x: newXY[0],
-      y: newXY[1]
+      message: msg
     })
   }
   render() {
@@ -26,7 +24,7 @@ class Game extends React.Component {
         <ReactCursorPosition>
           <GameScreen update={this.update} />
         </ReactCursorPosition>
-        <AnswerScreen txt={`x: ` + this.state.x + ` y: ` + this.state.y} />
+        <AnswerScreen txt={this.state.message} />
       </div>
     )
   }
