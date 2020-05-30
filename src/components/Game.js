@@ -10,7 +10,7 @@ import '../css/Game.css'
 class Game extends React.Component {
 
   state = {
-    message: 'hello world'
+    message: 'game start'
   }
   update = (msg) => {
     this.setState({

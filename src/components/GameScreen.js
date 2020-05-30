@@ -14,7 +14,7 @@ import cheese from '../images/Cheese.png'
 
 class GameScreen extends React.Component {
   state = {
-    message: '',
+    message: 'game active',
     activeDrags: 0,
     deltaPosition: {
       x: 0,
@@ -65,7 +65,9 @@ class GameScreen extends React.Component {
   }
 
   onStop = (e, ui) => {
+    console.log(ui.node)
     // edge case => check if tile already down
+    this.checkWinOrLose()
     let updatedActiveDrags = this.state.activeDrags
     updatedActiveDrags -= 1
     const dropPadImgIndex = parseInt(ui.node.id)
@@ -140,6 +142,11 @@ class GameScreen extends React.Component {
     this.setState({
       tileLandingBackgrounds: landings
     })
+  }
+
+  checkWinOrLose = () => {
+    // cool stuff coming soon
+    
   }
 
   // Jesus is LORD
