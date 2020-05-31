@@ -56,8 +56,6 @@ class GameScreen extends React.Component {
     ]
   }
   
-  
-
   onStart = () => {
     let updatedActiveDrags = this.state.activeDrags
     updatedActiveDrags += 1
@@ -65,7 +63,7 @@ class GameScreen extends React.Component {
   }
 
   onStop = (e, ui) => {
-    console.log(ui.node)
+    // console.log(ui.node)
     // edge case => check if tile already down
     this.checkWinOrLose()
     let updatedActiveDrags = this.state.activeDrags
@@ -89,7 +87,6 @@ class GameScreen extends React.Component {
             dropPadFull[i] = true
             full += 1
             if (full === 4) {
-              console.log('drop pad full')
               this.detectDropPadFull()
             }
           }
@@ -97,6 +94,7 @@ class GameScreen extends React.Component {
       }
     }
     this.props.update(this.state.message)
+    this.checkWinOrLose()
     this.setState({
       activeDrags: updatedActiveDrags,
       dropped: dropped,
@@ -145,8 +143,9 @@ class GameScreen extends React.Component {
   }
 
   checkWinOrLose = () => {
-    // cool stuff coming soon
+    const dropped = JSON.parse(JSON.stringify(this.state.dropped))
     
+    console.log(dropped)
   }
 
   // Jesus is LORD
