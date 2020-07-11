@@ -93,7 +93,7 @@ class GameScreen extends React.Component {
         }
       }
     }
-    this.props.update(this.state.message)
+    this.props.update(this.state.message) // peek-a-boo
     this.checkWinOrLose()
     this.setState({
       activeDrags: updatedActiveDrags,
@@ -113,6 +113,7 @@ class GameScreen extends React.Component {
   handleDrag = (e, ui) => {
     const { x, y } = this.state.deltaPosition // object destructuring
     this.detectOverDropPad()
+    console.log(x, y)
     this.setState({
       deltaPosition: {
         x: x + ui.deltaX,
@@ -142,9 +143,9 @@ class GameScreen extends React.Component {
     })
   }
 
-  checkWinOrLose = () => {
+  checkWinOrLose = () => { 
     const dropped = JSON.parse(JSON.stringify(this.state.dropped))
-    
+    // dropped array contains only those tiles dropped onto the tilelanding
     console.log(dropped)
   }
 
