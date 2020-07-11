@@ -63,7 +63,6 @@ class GameScreen extends React.Component {
   }
 
   onStop = (e, ui) => {
-    // console.log(ui.node)
     // edge case => check if tile already down
     this.checkWinOrLose()
     let updatedActiveDrags = this.state.activeDrags
@@ -113,7 +112,6 @@ class GameScreen extends React.Component {
   handleDrag = (e, ui) => {
     const { x, y } = this.state.deltaPosition // object destructuring
     this.detectOverDropPad()
-    console.log(x, y)
     this.setState({
       deltaPosition: {
         x: x + ui.deltaX,
@@ -146,7 +144,6 @@ class GameScreen extends React.Component {
   checkWinOrLose = () => { 
     const dropped = JSON.parse(JSON.stringify(this.state.dropped))
     // dropped array contains only those tiles dropped onto the tilelanding
-    console.log(dropped)
   }
 
   // Jesus is LORD
