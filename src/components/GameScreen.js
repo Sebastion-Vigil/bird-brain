@@ -111,6 +111,7 @@ class GameScreen extends React.Component {
 
   handleDrag = (e, ui) => {
     const { x, y } = this.state.deltaPosition // object destructuring
+    console.log(x, y)
     this.detectOverDropPad()
     this.setState({
       deltaPosition: {
@@ -124,6 +125,7 @@ class GameScreen extends React.Component {
     const landings = JSON.parse(
       JSON.stringify(this.state.tileLandingBackgrounds)
     )
+    
     const cursorX = this.props.position.x
     const cursorY = this.props.position.y
     const yMinMax = this.state.yMinMax
@@ -142,7 +144,7 @@ class GameScreen extends React.Component {
   }
 
   checkWinOrLose = () => { 
-    const dropped = JSON.parse(JSON.stringify(this.state.dropped))
+    // const dropped = JSON.parse(JSON.stringify(this.state.dropped))
     // dropped array contains only those tiles dropped onto the tilelanding
   }
 
