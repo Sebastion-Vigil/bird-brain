@@ -111,7 +111,8 @@ class GameScreen extends React.Component {
 
   handleDrag = (e, ui) => {
     const { x, y } = this.state.deltaPosition // object destructuring
-    console.log(x, y)
+    // console.log(x, y)
+    console.log(ui.node)
     this.detectOverDropPad()
     this.setState({
       deltaPosition: {
@@ -122,14 +123,14 @@ class GameScreen extends React.Component {
   }
 
   detectOverDropPad = () => {
-    const landings = JSON.parse(
-      JSON.stringify(this.state.tileLandingBackgrounds)
-    )
-    
+    // const landings = JSON.parse(
+    //   JSON.stringify(this.state.tileLandingBackgrounds)
+    // )
+    const landings = this.state.tileLandingBackgrounds
     const cursorX = this.props.position.x
     const cursorY = this.props.position.y
     const yMinMax = this.state.yMinMax
-    if (cursorX > 47 && cursorX < 144) {
+    if (cursorX > 47 && cursorX < 144) { // if x in range check y
       for (let i = 0; i < 4; i++) {
         if (cursorY > yMinMax[i][0] && cursorY < yMinMax[i][1]) {
           landings[i] = 'gold'
